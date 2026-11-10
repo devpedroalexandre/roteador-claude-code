@@ -1,0 +1,14 @@
+{
+  "name": "mods-locais",
+  "description": "Mods pessoais do Claude Code (locais).",
+  "owner": {
+    "name": "Pedro Alexandre Brito"
+  },
+  "plugins": [
+    {
+      "name": "roteador",
+      "source": "./roteador",
+      "description": "Escolhe Haiku, Sonnet ou Opus a cada mensagem (/roteador on|off) e mostra o custo por modelo (/custo)."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "roteador",
+  "version": "0.7.0",
+  "description": "Gestão de tokens: escolhe modelo e esforço a cada mensagem (/roteador on|off), mostra contexto, saída e plano na linha de status, avisa a hora de compactar ou abrir conversa nova, dá boas práticas (/economia), custo por modelo (/custo) e o painel Models (/models).",
+  "author": { "name": "Pedro Alexandre Brito" },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "limiteTrocaTokens": {
+      "type": "number",
+      "title": "Limite de troca por palpite (tokens)",
+      "description": "Quando nenhuma regra decide e o Haiku classifica o pedido, a troca de modelo só acontece abaixo deste tamanho de conversa. O padrão (1 milhão) deixa cada mensagem ser avaliada sozinha, em qualquer tamanho de conversa; baixe para voltar a proteger o cache.",
+      "default": 1000000
+    },
+    "limiteTrocaCertaTokens": {
+      "type": "number",
+      "title": "Limite de troca por regra (tokens)",
+      "description": "Quando uma regra decide (palavra-chave, assunto sensível, mensagem longa), a troca de modelo vale até este tamanho de conversa. O padrão (1 milhão) não limita; baixe para voltar a proteger o cache.",
+      "default": 1000000
+    },
+    "avisoCompactarTokens": {
+      "type": "number",
+      "title": "Avisar para compactar (tokens)",
+      "description": "Quando a conversa chega a este tamanho, um aviso diz para rodar /compact quando acabar a tarefa (e a linha de status mostra ⚠ /compact).",
+      "default": 100000
+    },
+    "avisoNovaConversaTokens": {
+      "type": "number",
+      "title": "Avisar para abrir conversa nova (tokens)",
+      "description": "Quando a conversa chega a este tamanho, o aviso passa a recomendar /handoff e uma conversa NOVA: compactar de novo perde detalhe.",
+      "default": 200000
+    },
+    "avisoPlanoPercentual": {
+      "type": "number",
+      "title": "Avisar o uso do plano (%)",
+      "description": "Quando a janela de 5 horas do plano chega a esta porcentagem, um aviso lembra de poupar (com 90% o aviso é mais forte). O aviso diz quando a janela renova.",
+      "default": 75
+    },
+    "pressaoPlanoPercentual": {
+      "type": "number",
+      "title": "Economizar a partir de (% do plano)",
+      "description": "Com a janela de 5 horas neste percentual (e mais de 30 min até renovar), o roteador deixa de subir para o Opus e baixa o esforço. Assunto sensível (banco, dinheiro, publicação) nunca desce de modelo.",
+      "default": 85
+    },
+    "tetoPalpiteUsd": {
+      "type": "number",
+      "title": "Teto para subir de modelo por palpite (US$)",
+      "description": "Quando o Haiku classifica e pede um modelo MAIS forte, a troca só acontece se custar no máximo isto a mais que ficar (regravar o cache do modelo novo). Regra de palavra-chave (tarefa pesada, assunto sensível) sobe sempre. Descer de modelo só acontece se o turno inteiro sair mais barato.",
+      "default": 0.3
+    },
+    "validadeCacheMinutos": {
+      "type": "number",
+      "title": "Validade do cache (minutos)",
+      "description": "Depois deste tempo sem requisição o cache da conversa já expirou e trocar de modelo não custa nada a mais. Use 5 se o cache for o padrão de 5 minutos; 60 para o de 1 hora. Errar para mais só deixa o roteador mais cauteloso.",
+      "default": 60
+    },
+    "limiteHaikuTokens": {
+      "type": "number",
+      "title": "Limite do Haiku (tokens)",
+      "description": "Uma conversa que começou no Haiku e cresceu além deste tamanho passa para o Sonnet: é contexto grande demais para o modelo menor.",
+      "default": 100000
+    }
+  }
+}
